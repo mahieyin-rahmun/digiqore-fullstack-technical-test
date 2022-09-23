@@ -1,12 +1,25 @@
+# adapted from https://testdriven.io/blog/concurrent-web-scraping-with-selenium-grid-and-docker-swarm/
 version: "3"
 
 services:
+  hub:
+    container_name: selenium-hub
+    image: selenium/hub:4.1.3
+    ports:
+      - 4442:4442
+      - 4443:4443
+      - ${SELENIUM_HOST_PORT}:${SELENIUM_CONTAINER_PORT}    
+
   selenium-firefox:
     container_name: selenium-firefox
-    image: selenium/standalone-firefox:latest
+    image: selenium/node-firefox:latest
     restart: always
-    ports:
-      - ${SELENIUM_HOST_PORT}:${SELENIUM_CONTAINER_PORT}
+    depends_on:
+      - hub
+    environment:
+      - SE_EVENT_BUS_HOST=hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
 
   postgres:
     container_name: digiqore-scraper-postgres
