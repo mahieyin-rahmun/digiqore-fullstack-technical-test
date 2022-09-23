@@ -1,4 +1,7 @@
+import { injectable } from "inversify";
+
 // a basic service class for bootstrapping purposes
+@injectable()
 class IndexService {
   /**
    * a simple method to greet the user

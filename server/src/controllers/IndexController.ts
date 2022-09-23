@@ -1,10 +1,16 @@
 import { OK } from "@/config/common";
+import { DEPENDENCY_TYPES } from "@/dependency/types";
 import IndexService from "@services/IndexService";
 import { Request, Response, NextFunction } from "express";
+import { inject } from "inversify";
+import { controller, httpGet } from "inversify-express-utils";
 
 // the basic controller for bootstrapping purposes
+@controller("/")
 class IndexController {
-  constructor(private _indexService: IndexService) {}
+  constructor(
+    @inject(DEPENDENCY_TYPES.IndexService) private _indexService: IndexService,
+  ) {}
 
   /**
    * A basic handler method to greet the user
@@ -16,6 +22,7 @@ class IndexController {
    * Status Internal Server Error (500) - a JSON payload containing the error message
    * (handled by the error handler middleware)
    */
+  @httpGet("/")
   public async index(
     _: Request,
     res: Response,
