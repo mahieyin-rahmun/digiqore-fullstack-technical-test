@@ -1,9 +1,7 @@
 import LanguageLevelTable from "@/components/table/LanguageLevelTable";
 import useApi from "@/hooks/useApi";
 import { TProgrammingLanguageLevelData } from "@/types";
-import axios from "axios";
 import { useEffect } from "react";
-import { useState } from "react";
 
 export default function BasicTable() {
   const { data, error, loading, fetch } = useApi<{
