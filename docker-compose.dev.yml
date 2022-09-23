@@ -1,6 +1,13 @@
 version: "3"
 
 services:
+  selenium-firefox:
+    container_name: selenium-firefox
+    image: selenium/standalone-firefox:latest
+    restart: always
+    ports:
+      - ${SELENIUM_HOST_PORT}:${SELENIUM_CONTAINER_PORT}
+
   postgres:
     container_name: digiqore-scraper-postgres
     image: postgres:14
@@ -27,3 +34,4 @@ services:
       - 3001:3000
     depends_on:
       - postgres
+      - selenium-firefox

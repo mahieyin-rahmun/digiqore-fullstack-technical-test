@@ -15,6 +15,7 @@ export const {
   LOG_FORMAT,
   LOG_DIR,
   ORIGIN,
+  SELENIUM_HOST,
+  SELENIUM_HOST_PORT,
+  SELENIUM_CONTAINER_PORT,
 } = process.env;
-
-console.log(DB_PASSWORD);
