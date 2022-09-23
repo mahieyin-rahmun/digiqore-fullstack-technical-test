@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es2017",
     "module": "commonjs",
-    "types": ["reflect-metadata", "node"],
+    "types": ["reflect-metadata", "node", "jest"],
     "lib": ["dom", "es6", "es2017", "esnext.asynciterable"],
     "skipLibCheck": true,
     "sourceMap": true,
@@ -37,5 +37,12 @@
     }
   },
   "include": ["src/**/*.ts", "src/**/*.json", ".env", "src/config/db.ts"],
-  "exclude": ["node_modules", "src/http", "src/logs", "src/tests"]
+  "exclude": [
+    "node_modules",
+    "src/http",
+    "src/logs",
+    "src/tests",
+    "src/**/*.spec.ts",
+    "src/**/*.test.ts"
+  ]
 }
