@@ -10,8 +10,13 @@ import { Typography } from "@mui/material";
 
 const LanguageLevelTable: React.FC<TTableProps> = ({ data }) => {
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+    <TableContainer
+      component={Paper}
+      sx={{
+        height: "60vh",
+      }}
+    >
+      <Table sx={{ height: "max-content" }} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>
@@ -19,12 +24,12 @@ const LanguageLevelTable: React.FC<TTableProps> = ({ data }) => {
                 Language
               </Typography>
             </TableCell>
-            <TableCell>
+            <TableCell align="center">
               <Typography variant="h6" fontWeight={"bold"}>
                 Level
               </Typography>
             </TableCell>
-            <TableCell>
+            <TableCell align="center">
               <Typography variant="h6" fontWeight={"bold"}>
                 Average Source Statements
               </Typography>
@@ -40,10 +45,10 @@ const LanguageLevelTable: React.FC<TTableProps> = ({ data }) => {
               <TableCell>
                 <Typography variant="body1">{row.language}</Typography>
               </TableCell>
-              <TableCell>
+              <TableCell align="center">
                 <Typography variant="body1">{row.level}</Typography>
               </TableCell>
-              <TableCell>
+              <TableCell align="center">
                 <Typography variant="body1">
                   {row.averageSourceStatements}
                 </Typography>
