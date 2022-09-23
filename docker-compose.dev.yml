@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  postgres:
+    container_name: digiqore-scraper-postgres
+    image: postgres:14
+    restart: always
+    volumes:
+      - /var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    ports:
+      - 5431:5432
+
+  digiqore-scraper-backend:
+    container_name: digiqore-scraper-backend
+    build: 
+      context: ./server
+      dockerfile: Dockerfile.dev
+    restart: always
+    volumes:
+      - ./server:/usr/app
+      - /usr/app/node_modules
+    ports:
+      - 3001:3000
+    depends_on:
+      - postgres
