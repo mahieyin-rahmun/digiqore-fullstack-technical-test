@@ -8,6 +8,7 @@ import {
   DB_DATABASE,
   DB_DIALECT,
 } from "@config/index";
+import LanguageLevelModel from "@models/LanguageLevel.model";
 import { logger } from "@utils/logger";
 
 const sequelize = new Sequelize.Sequelize(DB_DATABASE!, DB_USER!, DB_PASSWORD, {
@@ -36,6 +37,7 @@ const DB = {
    * const { Users } = DB;
    *
    */
+  LanguageLevels: LanguageLevelModel(sequelize),
   sequelize, // connection instance (RAW queries)
   Sequelize, // library
 };
