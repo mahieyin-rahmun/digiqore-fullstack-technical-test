@@ -1,7 +1,7 @@
 // file inversify.config.ts
 
 import IndexController from "@/controllers/IndexController";
-import { IScraper } from "@/interfaces/scraper";
+import CS697ScraperController from "@/controllers/ScraperController";
 import IndexService from "@/services/IndexService";
 import { CS697ScraperService } from "@/services/ScraperService";
 import { SeleniumDriverService } from "@/services/SeleniumDriverService";
@@ -18,7 +18,10 @@ myContainer
   .to(SeleniumDriverService)
   .inSingletonScope();
 myContainer
-  .bind<IScraper>(DEPENDENCY_TYPES.ScraperService)
+  .bind<CS697ScraperService>(DEPENDENCY_TYPES.ScraperService)
   .to(CS697ScraperService);
+myContainer
+  .bind<CS697ScraperController>(DEPENDENCY_TYPES.CS697ScraperController)
+  .to(CS697ScraperController);
 
 export { myContainer };
