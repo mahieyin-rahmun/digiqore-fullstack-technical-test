@@ -4,9 +4,13 @@ import { IScraper } from "@/interfaces/scraper";
 import { NextFunction, Request, Response } from "express";
 import { inject } from "inversify";
 import { controller, httpGet } from "inversify-express-utils";
+import DB from "@models/index";
+const { LanguageLevels } = DB;
 
 @controller("/data")
 export default class CS697ScraperController {
+  private langaugeLevelModel = LanguageLevels;
+
   constructor(
     @inject(DEPENDENCY_TYPES.ScraperService) private scraperService: IScraper,
   ) {}
@@ -32,10 +36,18 @@ export default class CS697ScraperController {
   @httpGet("/")
   public async get(_: Request, res: Response, next: NextFunction) {
     try {
-      const data = await this.scraperService.scrape();
+      let existingData = await this.langaugeLevelModel.findAll();
+
+      if (!(existingData.length > 0)) {
+        const scrapedData = await this.scraperService.scrape();
+        await this.langaugeLevelModel.bulkCreate(scrapedData);
+      }
+
+      existingData = await this.langaugeLevelModel.findAll();
+
       return res.status(OK).json({
         message: "Success",
-        data: data,
+        data: existingData,
       });
     } catch (error) {
       return next(error);
