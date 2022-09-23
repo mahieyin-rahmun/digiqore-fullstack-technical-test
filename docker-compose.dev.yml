@@ -35,3 +35,19 @@ services:
     depends_on:
       - postgres
       - selenium-firefox
+
+  digiqore-scraper-frontend:
+    container_name: digiqore-scraper-frontend
+    build: 
+      context: ./client
+      dockerfile: Dockerfile.dev
+    restart: always
+    volumes:
+      - ./client:/usr/app
+      - /usr/app/node_modules
+    ports:
+      - 3002:3000
+    depends_on:
+      - postgres
+      - selenium-firefox
+      - digiqore-scraper-backend
