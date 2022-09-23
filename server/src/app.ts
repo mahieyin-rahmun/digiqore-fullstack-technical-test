@@ -9,11 +9,16 @@ import morgan from "morgan";
 import { logger, stream } from "@utils/logger";
 import { NOT_FOUND, OK } from "@config/common";
 import errorMiddleware from "./middlewares/error.middleware";
+import IndexController from "./controllers/IndexController";
+import IndexService from "./services/IndexService";
+import InvalidRouteController from "./controllers/InvalidRouteContoller";
 
 export default class App {
   private app: express.Application;
   public env: string;
   public port: string | number;
+  private indexController = new IndexController(new IndexService());
+  private invalidRouteController = new InvalidRouteController();
 
   constructor(
     env: string = process.env.NODE_ENV || "development",
@@ -51,21 +56,8 @@ export default class App {
   }
 
   private initializeRoutes(app: express.Application) {
-    app
-      .route("/api/v1/data")
-      .get((_: Request, res: Response, __: NextFunction) => {
-        return res.status(OK).json({
-          data: "Hello world from scraper",
-          message: "Success",
-        });
-      });
-
-    app.route("*").all((req: Request, res: Response) => {
-      return res.status(NOT_FOUND).json({
-        data: `The requested resource at ${req.url} was not found`,
-        message: "Error",
-      });
-    });
+    app.route("/api/v1/data").get(this.indexController.index);
+    app.route("*").all(this.invalidRouteController.invalidRoute);
   }
 
   private initializeMiddlewares(app: express.Application) {
