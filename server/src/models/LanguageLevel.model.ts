@@ -42,11 +42,11 @@ export const LanguageLevelModelAttributes: ModelAttributes<
   },
   level: {
     allowNull: false,
-    type: DataTypes.NUMBER,
+    type: DataTypes.DECIMAL,
   },
   averageSourceStatements: {
     allowNull: false,
-    type: DataTypes.NUMBER,
+    type: DataTypes.INTEGER,
   },
   createdAt: {
     type: DataTypes.DATE,
