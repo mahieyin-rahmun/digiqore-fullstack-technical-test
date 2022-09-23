@@ -62,10 +62,14 @@ export default function useApi<T>(
         if (error.response) {
           // The request was made and the server responded with a status code
           // that falls out of the range of 2xx
-          setError(error.response.data?.message || error.message);
+          setError(
+            error.response.data?.data ||
+              error.response.data?.message ||
+              error.message,
+          );
         } else {
           // Something happened in setting up the request that triggered an Error
-          setError("Something went wrong");
+          setError("Something went wrong, please try again later.");
         }
       })
       .finally(() => setLoading(false));
